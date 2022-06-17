@@ -14,19 +14,18 @@ CREATE TABLE tb_aluno (
     nome VARCHAR(100) NOT NULL,
     cpf CHAR(11) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    matricula VARCHAR(10) NOT NULL
+    matricula VARCHAR(10) NOT NULL,
+    curso_id INT(11) NOT NULL
 );
 CREATE TABLE tb_curso (
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    cpf CHAR(11) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    matricula VARCHAR(10) NOT NULL
+    carga_horaria INT(5) NOT NULL
 );
 CREATE TABLE tb_disciplina (
     nome VARCHAR(100) NOT NULL,
-    cpf CHAR(11) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    matricula VARCHAR(10) NOT NULL
+    carga_horaria INT(5) NOT NULL,
+    curso_id INT(11) NOT NULL
 );
 
 
