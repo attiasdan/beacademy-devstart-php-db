@@ -57,9 +57,7 @@ class ProductController extends AbstractController
         $result = $con->prepare($query);
         $result->execute();
 
-        $mensagem = 'Pronto, produto excluído.';
-
-        include dirname(__DIR__).'/View/_partials/message.php';
+        parent::renderMessage('Pronto, produto excluído');
     }
     public function updateAction(): void
     {
@@ -69,34 +67,41 @@ class ProductController extends AbstractController
 
         if ($_POST)
         {
-            $newName = $_POST['name'];
-            $newDescription = $_POST['description'];
-            $newValue = $_POST['value'];
-            $newPhoto = $_POST['photo'];
-            $newQuantity = $_POST['quantity'];
-            $newCategoryId = $_POST['category'];
+            $category = $_POST['categoryId'];
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $value = $_POST['value'];
+            $photo = $_POST['photo'];
+            $quantity = $_POST['quantity'];
+            $createdAt = date("Y-m-d H:m:s");
             
-            $queryUpdate = "UPDATE tb_product SET name='{$newName}', description='{$newDescription}' WHERE id='{$id}'";
+            $queryUpdate = "
+                UPDATE tb_product SET 
+                name='{$name}',
+                description='{$description}',
+                value='{$value}',
+                photo='{$photo}',
+                quantity='{$quantity}',
+                category_id='{$category}',
+                created_at='{$createdAt}' 
+                WHERE id='{$id}'
+            ";
+            
+            $resultUpdate = $con->prepare($queryUpdate);
+            $resultUpdate->execute();
 
-            /////////////////////////////////////////////////////////
-
-            //(name, description, value, photo, quantity, category_id, created_at)
-            //('{$name}', '{$description}', '{$value}', '{$photo}', '{$quantity}', '{$categoryId}', '{$createdAt}')";
-            /////////////////////////////////////////////////////////
-
-            $result = $con->prepare($queryUpdate);
-            $result->execute();
-
-            echo 'Pronto, categoria atualizada';
+            parent::renderMessage('Pronto, produto atualizado.');
         }
+        $product = $con->prepare("SELECT * FROM tb_product WHERE id='{$id}'");
+        $product->execute();
+        // $data = $product->fetch(\PDO::FETCH_ASSOC);
 
         $categories = $con->prepare('SELECT * FROM tb_category');
         $categories->execute();
 
-        $product = $con->prepare("SELECT * FROM tb_product WHERE id='{$id}'");
-        $product->execute();
-        $data = $product->fetch(\PDO::FETCH_ASSOC);
-
-        parent::render('product/edit', $categories);
+        parent::render('product/edit', [
+                'product' => $product->fetch(\PDO::FETCH_ASSOC),
+                'category' => $categories
+        ]);
     }
 }
