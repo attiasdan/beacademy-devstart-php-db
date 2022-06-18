@@ -48,7 +48,6 @@ class CategoryController extends AbstractController
         $result->execute();
 
         echo 'Pronto, categoria excluída.';
-        // parent::render('category/remove');
     }
     public function updateAction(): void
     {
