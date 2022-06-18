@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Connection\Connection;
 
-
 class CategoryController extends AbstractController
 {
     public function listAction(): void

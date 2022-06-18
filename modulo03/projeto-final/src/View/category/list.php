@@ -1,9 +1,10 @@
 <h1>Listar Categorias</h1>
 
+<div class="mb-3 text-end">
+    <a href="/categorias/novo" class="btn btn-outline-primary btn-sm">Nova Categoria</a>
+</div>
+
 <table class="table table-hover table-stripped">
-    <div class="mb-3 text-end">
-        <a href="/categorias/novo" class="btn btn-outline-primary btn-sm">Nova Categoria</a>
-    </div>
     <thead class="table-dark">
         <tr>
             <th>ID</th>
